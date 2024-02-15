@@ -1,0 +1,86 @@
+
+-------- Creating Savepoint ----------
+SQL> savepoint A;
+-------- Delete The Employees table data ------
+SQL> delete from employees;
+------- Selecting the data 
+SQL>select * from emploeyes;
+-------- You will not get any data 
+-------- Rolling back the data using Savepoint --------
+SQL> rollback to A;
+-------- Checking the Data it will give Rollback the data -------
+SQL> select * from employees;
+<......... Truncating Employee Table ..............>
+SQL>truncate table employees;
+------ Check out to find the employee data ------
+SQL>select * from employees;
+-----You Won't get any Data -----
+<............. Try to Rollback the data ............>
+SQL>rollback;
+<.............. Check out to find the data .........>
+SQL> select * from employees;
+------ You will not get any data ----------
+------After Completing all your SQL Statements Write this Save ----------
+SQL>commit;
+ 
+
+
+
+                                 Constraints
+<..... Creating Table with Not Null Constraint .....>
+SQL>Create table studentnotnull ( St_no number(5) constraint student_cons_nn not null,
+st_name varchar2(50) not null, St_address varchar2(20) ); 
+SQL>desc studentnotnull;
+<..... Creating Table with No Constraint ......>
+SQ>create table employees(empid number, gender char(1), Email varchar2(20),
+DateofJoing date);
+SQL>desc employees;
+<... Adding Not null an Existing Table .....>
+SQL>alter table employees modify empid number constraint
+empid_nn not null;
+SQL>desc employees;
+<... Creating table with unique Constraint ...>
+SQl>Create table studentunique( St_no number(5) constraint st_no_un unique,
+St_name varchar2(50) unique, St_address varchar2(20));
+SQL>desc studentunique;
+<.... Adding Unique table an Existing Table .....>
+SQl>alter table employees add constraint empl_Email_un unique(Email);
+SQL>desc employees;
+<....  Creating Table with Default Constraint ....>
+SQl>create table studentdefault( St_no number(5) unique, St_name varchar2(50) not null, St_age number(2)
+default 20, St_nation varchar2(20) default 'Somali', St_address varchar2(20)); 
+SQL>desc studentdefault;
+<.... Adding Default Constraint an Existing Table .....>
+SQL>> alter table employees modify DateofJoing date default sysdate;
+SQl>desc employees;
+<..... Creating Table with Check Constraint .......>
+SQL>create table studentcheck
+( St_name varchar2(20) not null, St_gend char(1) check(St_gend in ('m','f')),
+st_age number(2) check(st_age between 19 and 30));
+SQL>desc studentcheck;
+<.... Adding Check Constraint an Existing Table ....>
+SQl>alter table employees add constraint emp_gen_ch check(gender in('M','F'));
+SQL>desc employees;
+<..... Creating table  with Primary Key .......>
+SQL> alter table employees add constraint constraint_pk primary key(empid);
+SQL>desc employees;
+<..... Creating Section Table with Primary Key ....>
+SQL>Create table sectionPk ( Section_no number(3) primary key,
+Section_name varchar2(30) not null ); 
+SQL>desc sectionPk;
+<.... Creating Student Table with Foreign key .....>
+SQL>Create table studentFk
+( St_no number(2),
+St_name varchar2(20),
+Section_no number(3),
+Constraint fk_section_no foreign key(section_no) references sectionPk(section_no));
+SQL>desc studentFk;
+<.... Deleting Constraint from a table ...>
+SQL>alter table studentFk drop constraint fk_section_no;
+
+
+
+
+
+
+
